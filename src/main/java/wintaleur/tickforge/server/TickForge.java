@@ -1,11 +1,15 @@
-package wintaleur.tickforge;
+package wintaleur.tickforge.server;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.resources.Identifier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import wintaleur.tickforge.common.command.CommandRegistry;
+import wintaleur.tickforge.server.command.TickForgeCommands;
 
 public class TickForge implements ModInitializer {
 	public static final String MOD_ID = "tickforge";
@@ -20,8 +24,12 @@ public class TickForge implements ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-
 		LOGGER.info("Hello Fabric world!");
+
+		// Les commandes serveur
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environmment) -> {
+			CommandRegistry.register(dispatcher, "tickforge", TickForgeCommands::build);
+		});
 	}
 
 	public static Identifier id(String path) {

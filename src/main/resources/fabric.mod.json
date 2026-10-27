@@ -16,7 +16,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"wintaleur.tickforge.TickForge"
+          "wintaleur.tickforge.server.TickForge"
 		],
 		"client": [
 			"wintaleur.tickforge.client.TickForgeClient"
@@ -25,18 +25,11 @@
 			"wintaleur.tickforge.client.TickForgeDataGenerator"
 		]
 	},
-	"mixins": [
-		"tickforge.mixins.json",
-		{
-			"config": "tickforge.client.mixins.json",
-			"environment": "client"
-		}
-	],
 	"depends": {
 		"fabricloader": ">=0.20.1",
 		"minecraft": "~26.3",
 		"java": ">=25",
 		"fabric-api": "*",
-		"vellum": "*"
+		"vellum": ">=0.9.0"
 	}
 }

@@ -1,0 +1,24 @@
+{
+  "name": "tickforge-26.3",
+  "version": "1.0.0",
+  "description": "For setup instructions, please see the [Fabric Documentation page](https://docs.fabricmc.net/develop/getting-started/creating-a-project#setting-up) related to the IDE that you are using.",
+  "main": "index.js",
+  "scripts": {
+    "sass:build": "sass src/main/scss:build/generated/resources/sass/assets/tickforge/css --no-source-map",
+    "sass:watch": "sass --watch src/main/scss:build/generated/resources/sass/assets/tickforge/css --no-source-map"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wintaleur/TickForge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wintaleur/TickForge/issues"
+  },
+  "homepage": "https://github.com/wintaleur/TickForge#readme",
+  "devDependencies": {
+    "sass": "^1.106.1"
+  }
+}

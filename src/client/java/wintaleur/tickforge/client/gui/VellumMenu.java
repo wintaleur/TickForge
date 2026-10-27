@@ -1,4 +1,4 @@
 package wintaleur.tickforge.client.gui;
 
-public class MenuClient {
+public class VellumMenu {
 }

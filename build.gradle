@@ -9,6 +9,10 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	maven {
+		url = "https://maven.maxleiter.com"
+		content { includeGroup("dev.vellum") }
+	}
 }
 
 loom {
@@ -38,7 +42,8 @@ dependencies {
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	// Vellum GUI
-	implementation "dev.vellum:vellum-fabric-1.21.1:0.5.1"
+	implementation "dev.vellum:vellum-common-26.3:0.9.0"
+	implementation "dev.vellum:vellum-fabric-26.3:0.9.0"
 
 }
 
