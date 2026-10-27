@@ -1,6 +1,42 @@
+<link rel="stylesheet" href="css/main.css">
 <div class="menu">
-  <h1>Mon menu</h1>
-  <button @click="vellum.send('close')">
-    Fermer
-  </button>
+  <header class="menu-header">
+    <h1>TickForge</h1>
+    <span class="subtitle">CONFIGURATION</span>
+  </header>
+
+  <div class="menu-layout">
+    <nav class="sidebar">
+      <button class="tab active">Modules</button>
+      <button class="tab">HUD</button>
+      <button class="tab">Options</button>
+    </nav>
+
+    <main class="content">
+      <h2 class="section-title">Modules</h2>
+
+      <div class="setting">
+        <div>
+          <strong>FPS Counter</strong>
+          <span class="description">Affiche les FPS</span>
+        </div>
+        <input type="checkbox" checked />
+      </div>
+
+      <div class="setting">
+        <div>
+          <strong>Couleur du HUD</strong>
+          <span class="description">Personnalisation visuelle</span>
+        </div>
+        <button class="button">Modifier</button>
+      </div>
+
+      <button class="button primary">Appliquer</button>
+    </main>
+  </div>
+
+  <footer class="menu-footer">
+    <span>TickForge v1.0</span>
+    <span class="status">Prêt</span>
+  </footer>
 </div>

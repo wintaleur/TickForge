@@ -109,11 +109,8 @@ def compileSass = tasks.register('compileSass', Exec) {
 
 	workingDir projectDir
 
-	if (System.getProperty('os.name').toLowerCase().contains('windows')) {
-		commandLine 'cmd', '/c', 'npm run sass:build'
-	} else {
-		commandLine 'npm', 'run', 'sass:build'
-	}
+	commandLine '/usr/local/bin/npm', 'run', 'sass:build'
+
 }
 
 sourceSets {
@@ -126,6 +123,11 @@ sourceSets {
 	}
 }
 
+
 tasks.named('processResources') {
+	dependsOn compileSass
+}
+
+tasks.named('sourcesJar') {
 	dependsOn compileSass
 }

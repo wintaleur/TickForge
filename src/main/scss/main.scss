@@ -1,0 +1,267 @@
+
+$bg-dark: #202326;
+$bg-panel: #303438;
+$bg-panel-light: #41464a;
+
+$border-dark: #17191b;
+$border-light: #62686b;
+
+$text-main: #e0ded6;
+$text-muted: #a5a59e;
+
+$accent: #d98b45;
+$accent-hover: #f0a65c;
+
+$font-main: "Minecraft", monospace;
+
+// Espacements
+$space-xs: 0.25em;
+$space-sm: 0.5em;
+$space-md: 0.8em;
+$space-lg: 1.2em;
+$space-xl: 1.6em;
+$space-xxl: 2em;
+
+// Bordures : les pixels restent utiles pour le rendu pixel-art
+$border-thin: 1px;
+$border-thick: 2px;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 1.5%;
+
+  color: $text-main;
+  font-family: $font-main;
+  font-size: 12px;
+
+  background: transparent;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+.menu {
+  width: 100%;
+  padding: $space-xl;
+
+  background: $bg-dark;
+  border: $border-thick solid $border-dark;
+  outline: $border-thin solid $border-light;
+
+  box-shadow:
+    inset 0 0 0 $border-thin #383c3f,
+    0 4px 12px #0008;
+}
+
+.menu-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: $space-lg;
+
+  padding: $space-xl;
+  margin-bottom: $space-xl;
+
+  background: $bg-panel;
+  border: $border-thin solid $border-dark;
+  border-bottom: $border-thick solid $accent;
+
+  h1 {
+    margin: 0;
+    font-size: 1.35em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    color: $text-muted;
+    font-size: 0.85em;
+  }
+}
+
+.menu-layout {
+  display: grid;
+  grid-template-columns: minmax(10em, 0.28fr) minmax(0, 1fr);
+  gap: $space-xl;
+}
+
+.sidebar {
+  display: grid;
+  grid-auto-rows: min-content;
+  align-content: start;
+  gap: $space-md;
+  padding: $space-md;
+
+  background: $bg-panel;
+  border: $border-thin solid $border-dark;
+}
+
+.tab {
+  width: 100%;
+  padding: $space-lg $space-md;
+
+  text-align: left;
+  cursor: pointer;
+
+  background: $bg-panel-light;
+  border: $border-thin solid $border-dark;
+  border-top-color: $border-light;
+
+  &:hover {
+    background: #50565a;
+    border-color: $accent;
+  }
+
+  &.active {
+    color: #fff1dc;
+    background: #65452d;
+    border-color: $accent;
+    box-shadow: inset 3px 0 $accent;
+  }
+}
+
+.content {
+  min-width: 0;
+  padding: $space-xxl;
+
+  background: $bg-panel;
+  border: $border-thin solid $border-dark;
+  box-shadow: inset 0 0 0 $border-thin #3a3e41;
+}
+
+.section-title {
+  margin: 0 0 $space-xl;
+  padding-bottom: $space-md;
+
+  color: $accent;
+  font-size: 1.15em;
+  text-transform: uppercase;
+
+  border-bottom: $border-thin solid $border-light;
+}
+
+.setting {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: $space-lg;
+
+  padding: $space-lg;
+  margin-bottom: $space-md;
+
+  background: #282b2e;
+  border: $border-thin solid #202225;
+
+  &:hover {
+    background: #35393c;
+  }
+
+  .description {
+    display: block;
+    margin-top: $space-sm;
+    color: $text-muted;
+    font-size: 0.85em;
+    line-height: 1.4;
+  }
+}
+
+.button {
+  padding: $space-md $space-xl;
+  cursor: pointer;
+
+  color: $text-main;
+  background: $bg-panel-light;
+
+  border: $border-thin solid $border-dark;
+  border-top-color: $border-light;
+  border-left-color: $border-light;
+
+  &:hover {
+    color: #fff;
+    background: #555b5f;
+    border-color: $accent;
+  }
+
+  &:active {
+    background: #242729;
+    border-color: $border-dark;
+  }
+
+  &.primary {
+    color: #fff3e4;
+    background: #80532f;
+    border-color: #b77b43;
+
+    &:hover {
+      background: #a66b39;
+    }
+  }
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  min-width: 0;
+  max-width: 100%;
+  padding: $space-md $space-lg;
+
+  background: #1c1e20;
+  border: $border-thin solid $border-dark;
+  border-bottom-color: $border-light;
+  outline: none;
+
+  &:focus {
+    border-color: $accent;
+  }
+}
+
+input[type="checkbox"],
+input[type="range"] {
+  accent-color: $accent;
+}
+
+.status {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: $space-sm;
+
+  color: #a8c98b;
+
+  &::before {
+    content: "";
+    width: 0.5em;
+    height: 0.5em;
+    background: currentColor;
+    box-shadow: 0 0 4px currentColor;
+  }
+
+  &.disabled {
+    color: #cf8b79;
+  }
+}
+
+.menu-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: $space-lg;
+
+  margin-top: $space-xl;
+  padding: $space-lg $space-xl;
+
+  color: $text-muted;
+  background: $bg-panel;
+  border: $border-thin solid $border-dark;
+
+  font-size: 0.85em;
+}

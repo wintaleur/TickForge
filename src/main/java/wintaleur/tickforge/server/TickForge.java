@@ -27,9 +27,7 @@ public class TickForge implements ModInitializer {
 		LOGGER.info("Hello Fabric world!");
 
 		// Les commandes serveur
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environmment) -> {
-			CommandRegistry.register(dispatcher, "tickforge", TickForgeCommands::build);
-		});
+		TickForgeCommands.register();
 	}
 
 	public static Identifier id(String path) {
