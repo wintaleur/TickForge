@@ -1,30 +1,24 @@
 package wintaleur.tickforge.server.command.implementation;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import wintaleur.tickforge.common.command.CommandFactory;
 import wintaleur.tickforge.common.utils.Utils;
 
+/** /tf server test */
 public final class TestCommand {
     private TestCommand() {}
 
-    public static LiteralArgumentBuilder<CommandSourceStack> build(
-            LiteralArgumentBuilder<CommandSourceStack> builder
-    ) {
-        return builder.then(
-                CommandFactory.<CommandSourceStack>literal("test")
-                        .executes(context -> {
-                            var source = context.getSource();
+    public static LiteralArgumentBuilder<CommandSourceStack> build() {
+        return CommandFactory.<CommandSourceStack>literal("test")
+                .executes(context -> {
+                    context.getSource().sendSuccess(
+                            () -> Utils.chatPrint("Permissions serveurs accessibles !"),
+                            false
+                    );
 
-                            if (source == null) return 0;
-
-                            source.sendSuccess(
-                                    () -> Utils.chatPrint("Permissions serveurs accessibles !"),
-                                    false
-                            );
-
-                            return 1;
-                        })
-        );
+                    return Command.SINGLE_SUCCESS;
+                });
     }
 }

@@ -14,25 +14,39 @@ $accent-hover: #f0a65c;
 
 $font-main: "Minecraft", monospace;
 
-// Espacements
-$space-xs: 0.25em;
-$space-sm: 0.5em;
-$space-md: 0.8em;
-$space-lg: 1.2em;
-$space-xl: 1.6em;
-$space-xxl: 2em;
+// Espacements : relatifs à la taille de police racine
+$space-xs: 0.25rem;
+$space-sm: 0.5rem;
+$space-md: 0.8rem;
+$space-lg: 1.2rem;
+$space-xl: 1.6rem;
+$space-xxl: 2rem;
 
-// Bordures : les pixels restent utiles pour le rendu pixel-art
+// Bordures : pixels fixes pour conserver le rendu pixel-art
 $border-thin: 1px;
 $border-thick: 2px;
 
-* {
+// Réinitialisation globale
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
+html {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
 body {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
   margin: 0;
   padding: 1.5%;
+  overflow: hidden;
 
   color: $text-main;
   font-family: $font-main;
@@ -43,13 +57,53 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
   font: inherit;
   color: inherit;
 }
 
+// ─── Cadre d'écran ─────────────────────────────────────────────
+// Garantit qu'un écran ne dépasse JAMAIS la fenêtre Minecraft.
+//
+// Pourquoi : le viewport est la fenêtre divisée par l'échelle d'interface
+// (1080p en GUI x4 = 480x270, 720p en GUI x3 = 427x240), et Minecraft ne
+// garantit qu'un minimum de 320x240. Une page « qui a la taille de son
+// contenu » déborde donc dès que l'échelle monte.
+//
+// Règle pour chaque écran TickForge :
+//   .tf-screen  racine de la page : remplit la fenêtre, jamais plus
+//   .tf-fill    zone qui prend toute la place restante (entre en-tête et pied)
+//   .tf-scroll  zone qui défile quand son contenu est trop grand
+// L'en-tête et le pied gardent leur taille ; seul ce qui est dans .tf-scroll
+// peut dépasser, et ça défile au lieu d'être coupé.
+.tf-screen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.tf-fill {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.tf-scroll {
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// Menu principal
 .menu {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: $space-xl;
 
   background: $bg-dark;
@@ -61,12 +115,15 @@ select {
     0 4px 12px #0008;
 }
 
+// En-tête
 .menu-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: $space-lg;
 
+  flex-shrink: 0;
+  min-width: 0;
   padding: $space-xl;
   margin-bottom: $space-xl;
 
@@ -75,41 +132,60 @@ select {
   border-bottom: $border-thick solid $accent;
 
   h1 {
+    min-width: 0;
     margin: 0;
+
     font-size: 1.35em;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+
+    overflow-wrap: anywhere;
   }
 
   .subtitle {
+    min-width: 0;
     color: $text-muted;
     font-size: 0.85em;
+    overflow-wrap: anywhere;
   }
 }
 
+// Disposition principale
 .menu-layout {
   display: grid;
-  grid-template-columns: minmax(10em, 0.28fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.28fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   gap: $space-xl;
+
+  width: 100%;
+  min-width: 0;
 }
 
+// Barre latérale
 .sidebar {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-auto-rows: min-content;
   align-content: start;
   gap: $space-md;
+
+  min-width: 0;
   padding: $space-md;
 
   background: $bg-panel;
   border: $border-thin solid $border-dark;
 }
 
+// Onglets
 .tab {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: $space-lg $space-md;
 
   text-align: left;
+  overflow-wrap: anywhere;
   cursor: pointer;
 
   background: $bg-panel-light;
@@ -129,32 +205,41 @@ select {
   }
 }
 
+// Zone de contenu
 .content {
   min-width: 0;
+  max-width: 100%;
   padding: $space-xxl;
+
+  overflow-wrap: anywhere;
 
   background: $bg-panel;
   border: $border-thin solid $border-dark;
   box-shadow: inset 0 0 0 $border-thin #3a3e41;
 }
 
+// Titres de section
 .section-title {
+  min-width: 0;
   margin: 0 0 $space-xl;
   padding-bottom: $space-md;
 
   color: $accent;
   font-size: 1.15em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 
   border-bottom: $border-thin solid $border-light;
 }
 
+// Paramètres
 .setting {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   align-items: center;
   gap: $space-lg;
 
+  min-width: 0;
   padding: $space-lg;
   margin-bottom: $space-md;
 
@@ -165,17 +250,31 @@ select {
     background: #35393c;
   }
 
+  > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
   .description {
     display: block;
+    min-width: 0;
     margin-top: $space-sm;
+
     color: $text-muted;
     font-size: 0.85em;
     line-height: 1.4;
+
+    overflow-wrap: anywhere;
   }
 }
 
+// Boutons
 .button {
+  min-width: 0;
+  max-width: 100%;
   padding: $space-md $space-xl;
+
+  overflow-wrap: anywhere;
   cursor: pointer;
 
   color: $text-main;
@@ -207,9 +306,11 @@ select {
   }
 }
 
+// Champs de formulaire
 input[type="text"],
 input[type="number"],
 select {
+  width: 100%;
   min-width: 0;
   max-width: 100%;
   padding: $space-md $space-lg;
@@ -224,16 +325,21 @@ select {
   }
 }
 
+// Cases à cocher et curseurs
 input[type="checkbox"],
 input[type="range"] {
   accent-color: $accent;
 }
 
+// Statut
 .status {
   display: inline-grid;
   grid-template-columns: auto auto;
   align-items: center;
   gap: $space-sm;
+
+  min-width: 0;
+  max-width: 100%;
 
   color: #a8c98b;
 
@@ -241,6 +347,7 @@ input[type="range"] {
     content: "";
     width: 0.5em;
     height: 0.5em;
+
     background: currentColor;
     box-shadow: 0 0 4px currentColor;
   }
@@ -250,12 +357,16 @@ input[type="range"] {
   }
 }
 
+// Pied de menu
 .menu-footer {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   align-items: center;
   gap: $space-lg;
 
+  flex-shrink: 0;
+  min-width: 0;
+  max-width: 100%;
   margin-top: $space-xl;
   padding: $space-lg $space-xl;
 
@@ -264,4 +375,90 @@ input[type="range"] {
   border: $border-thin solid $border-dark;
 
   font-size: 0.85em;
+  overflow-wrap: anywhere;
+}
+
+// Écrans logiques petits (échelle d'interface élevée) : on compacte les
+// espacements pour que l'essentiel tienne sans défiler. Le reste défile dans
+// .tf-scroll. On ne passe plus en colonne unique : empiler la barre latérale
+// au-dessus du contenu mangeait justement la hauteur qui manque.
+@media (max-width: 600px), (max-height: 640px) {
+  body {
+    padding: 4px;
+  }
+
+  .menu {
+    padding: $space-sm;
+  }
+
+  .menu-header {
+    padding: $space-sm $space-md;
+    margin-bottom: $space-sm;
+  }
+
+  .menu-layout {
+    gap: $space-sm;
+  }
+
+  .sidebar {
+    padding: $space-sm;
+    gap: $space-sm;
+  }
+
+  .tab {
+    padding: $space-sm;
+  }
+
+  .content {
+    padding: $space-md;
+  }
+
+  .section-title {
+    margin-bottom: $space-md;
+    padding-bottom: $space-sm;
+  }
+
+  .setting {
+    padding: $space-md;
+    margin-bottom: $space-sm;
+  }
+
+  .menu-footer {
+    margin-top: $space-sm;
+    padding: $space-sm $space-md;
+  }
+
+  .button {
+    padding: $space-sm $space-md;
+  }
+}
+
+// Très petits écrans (ex. 1280x720 en GUI x3 = 427x240) : on rogne encore pour
+// laisser le maximum de hauteur à la zone de contenu.
+@media (max-height: 300px) {
+  .menu {
+    padding: $space-xs;
+  }
+
+  .menu-header {
+    padding: $space-xs $space-sm;
+    margin-bottom: $space-xs;
+
+    h1 {
+      font-size: 1em;
+    }
+  }
+
+  .menu-layout {
+    gap: $space-xs;
+  }
+
+  .section-title {
+    margin-bottom: $space-sm;
+  }
+
+  .menu-footer {
+    margin-top: $space-xs;
+    padding: $space-xs $space-sm;
+  }
 }

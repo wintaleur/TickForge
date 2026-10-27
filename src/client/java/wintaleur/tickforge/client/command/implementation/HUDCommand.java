@@ -1,33 +1,27 @@
 package wintaleur.tickforge.client.command.implementation;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import dev.vellum.mod.client.VellumScreens;
+import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
+import wintaleur.tickforge.client.gui.TickForgeScreen;
 import wintaleur.tickforge.common.command.CommandFactory;
-import wintaleur.tickforge.common.utils.Utils;
+import wintaleur.tickforge.common.command.CommandNames;
 
+/** /tf client menu */
 public final class HUDCommand {
-    private HUDCommand(){}
+    private static final String MENU_PAGE = "menu.html";
 
-    public static <S> LiteralArgumentBuilder<S> build(LiteralArgumentBuilder<S> builder) {
-        return builder.then(
-                CommandFactory.<S>literal("menu").executes(context -> {
+    private HUDCommand() {}
 
-                    var source = Utils.getClientSource(context);
+    public static LiteralArgumentBuilder<FabricClientCommandSource> build() {
+        return CommandFactory.<FabricClientCommandSource>literal(CommandNames.MENU)
+                .executes(HUDCommand::openMenu);
+    }
 
-                    if (source == null) {
-                        System.out.println("Tried to open Menu on an inexistant source or server.");
-                        return 0;
-                    };
+    private static int openMenu(CommandContext<FabricClientCommandSource> context) {
+        TickForgeScreen.open(MENU_PAGE);
 
-                    source.getClient().execute(
-                            () -> VellumScreens.open("tickforge:menu.html")
-                    );
-
-                    return 1;
-                })
-        );
+        return Command.SINGLE_SUCCESS;
     }
 }
